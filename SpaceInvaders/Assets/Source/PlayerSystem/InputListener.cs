@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.Rendering.DebugUI;
 
 public class InputListener : MonoBehaviour
 {
@@ -13,7 +12,6 @@ public class InputListener : MonoBehaviour
     private void Start()
     {
         m_Actions = new InputSystem_Actions();
-        //m_Actions.Player.Move.performed += ActivateBool;
         m_Actions.Player.Move.performed += Move;
         m_Actions.Enable();
         _value = new Vector2();
@@ -21,11 +19,9 @@ public class InputListener : MonoBehaviour
 
     private void Update()
     {
-        if (_canMove)
-        {
-            Vector3 velocity = new Vector3(_value.x, 0, 0) * speed * Time.deltaTime;
-            gameObject.transform.position += velocity;
-        }
+        Vector3 velocity = new Vector3(_value.x, 0, 0) * speed * Time.deltaTime;
+        gameObject.transform.position += velocity;
+        
     }
 
     private void ActivateBool(InputAction.CallbackContext T)
@@ -36,7 +32,7 @@ public class InputListener : MonoBehaviour
 
     private void Move(InputAction.CallbackContext obj)
     {
-        Vector2 _value = obj.ReadValue<Vector2>();
+        _value = obj.ReadValue<Vector2>();
         _canMove= true;
         Debug.Log(_canMove);
         Debug.Log(_value);
