@@ -1,29 +1,44 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class InputListener : MonoBehaviour
 {
-    private InputSystem_Actions m_Actions;
     [SerializeField] private float speed = 1;
+    private InputSystem_Actions m_Actions;
+    private bool _canMove = false;
+    private Vector2 _value;
+    
 
-    void Start()
+    private void Start()
     {
         m_Actions = new InputSystem_Actions();
+        //m_Actions.Player.Move.performed += ActivateBool;
         m_Actions.Player.Move.performed += Move;
-        //m_Actions.Player.Move.performed булевая тру;
         m_Actions.Enable();
+        _value = new Vector2();
     }
 
     private void Update()
     {
-        //вызываем мув
+        if (_canMove)
+        {
+            Vector3 velocity = new Vector3(_value.x, 0, 0) * speed * Time.deltaTime;
+            gameObject.transform.position += velocity;
+        }
     }
 
-    private void Move(InputAction.CallbackContext obj) //при тру булевой
+    private void ActivateBool(InputAction.CallbackContext T)
     {
-        var value = obj.ReadValue<Vector2>();
-        var velocity = new Vector3(value.x, value.y, 0) * speed * Time.deltaTime;
-        gameObject.transform.position += velocity;
-        Debug.Log(value);
+        _canMove = true;
+        Debug.Log(_canMove);
+    }
+
+    private void Move(InputAction.CallbackContext obj)
+    {
+        Vector2 _value = obj.ReadValue<Vector2>();
+        _canMove= true;
+        Debug.Log(_canMove);
+        Debug.Log(_value);
     }
 }
