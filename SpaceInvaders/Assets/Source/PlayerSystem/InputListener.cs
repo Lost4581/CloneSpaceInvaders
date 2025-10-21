@@ -10,10 +10,16 @@ public class InputListener : MonoBehaviour
     {
         m_Actions = new InputSystem_Actions();
         m_Actions.Player.Move.performed += Move;
+        //m_Actions.Player.Move.performed булевая тру;
         m_Actions.Enable();
     }
 
-    private void Move(InputAction.CallbackContext obj)
+    private void Update()
+    {
+        //вызываем мув
+    }
+
+    private void Move(InputAction.CallbackContext obj) //при тру булевой
     {
         var value = obj.ReadValue<Vector2>();
         var velocity = new Vector3(value.x, value.y, 0) * speed * Time.deltaTime;
