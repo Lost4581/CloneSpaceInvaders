@@ -6,7 +6,7 @@ public class PlayerAtack : MonoBehaviour
 {
     [SerializeField] private GameObject bulletPref;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private int ReloadTime;
+
     private bool canShoot = true;
 
     private void Update()
@@ -19,13 +19,6 @@ public class PlayerAtack : MonoBehaviour
 
     private void Atack(GameObject bullet)
     {
-        StartCoroutine(Reload());
-        Instantiate(bulletPref, firePoint.position, firePoint.rotation);
-    }
-    IEnumerator Reload()
-    {
-        canShoot = false;
-        yield return new WaitForSeconds(ReloadTime);
-        canShoot = true;
+        Instantiate(bullet, firePoint.position, firePoint.rotation);
     }
 }
